@@ -1,7 +1,14 @@
 FROM php:8.3-apache
 
-RUN docker-php-ext-install mysqli
+RUN apt-get update && apt-get install -y \
+    default-mysql-server \
+    supervisor \
+    && docker-php-ext-install mysqli
 
-COPY . /var/www/html/
+COPY recibir_datos.php /var/www/html/recibir_datos.php
+COPY init.sql /init.sql
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 EXPOSE 80
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

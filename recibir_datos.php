@@ -4,7 +4,26 @@ if (!isset($_POST['ppm'])) {
     exit("No llegó ppm");
 }
 
-$ppm = $_POST['ppm'];
+$ppm = floatval($_POST['ppm']);
 
-echo "Render funcionando. PPM recibido: " . $ppm;
+$conexion = mysqli_connect(
+    "127.0.0.1",
+    "root",
+    "",
+    "monitor_gases"
+);
+
+if (!$conexion) {
+    http_response_code(500);
+    exit("Error DB: " . mysqli_connect_error());
+}
+
+$sql = "INSERT INTO lecturas (valor_gas, fecha_hora) VALUES ($ppm, NOW())";
+
+if (mysqli_query($conexion, $sql)) {
+    echo "INSERT OK. PPM recibido: $ppm";
+} else {
+    http_response_code(500);
+    echo "Error INSERT: " . mysqli_error($conexion);
+}
 ?>
