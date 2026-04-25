@@ -1,6 +1,11 @@
 <?php 
 
-$conexion = mysqli_connect("127.0.0.1", "root", "", "monitor_gases"); 
+$conexion = mysqli_connect(
+    "127.0.0.1",
+    "appuser",
+    "1234",
+    "monitor_gases"
+);
 
 $resultado = mysqli_query($conexion, "SELECT * FROM lecturas ORDER BY fecha_hora DESC LIMIT 10"); 
 

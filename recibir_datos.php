@@ -8,8 +8,8 @@ $ppm = floatval($_POST['ppm']);
 
 $conexion = mysqli_connect(
     "127.0.0.1",
-    "root",
-    "",
+    "appuser",
+    "1234",
     "monitor_gases"
 );
 
